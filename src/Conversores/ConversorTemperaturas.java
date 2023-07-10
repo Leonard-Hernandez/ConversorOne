@@ -2,56 +2,53 @@ package Conversores;
 
 public class ConversorTemperaturas {
 	
-	private double temperatura;
-	private String tipoDeDato;
-	
-	public double convertirTemperatura(double cantidad, String tipo, String tipoDestino) {
-		
-		this.temperatura = cantidad;
-		this.tipoDeDato = tipo;
-		
-		switch (tipoDeDato.toLowerCase()) {
-		case "c" :
-			
-			if(tipoDestino == "f") {
-				return (this.temperatura * 9/5) + 32;
-			}else if(tipoDestino == "k") {
-				return this.temperatura +  273.15;
-			}else if(tipoDestino == "c") {
-				return this.temperatura;
-			}else {
-				throw new IllegalAccessError("Tipo de destino erroneo");
-			}
-						
-		case "k" :
-			
-			if(tipoDestino == "f") {
-				return (this.temperatura - 273.15) * 9/5 + 32;
-			}else if(tipoDestino == "k") {
-				return this.temperatura;
-			}else if(tipoDestino == "c") {
-				return this.temperatura - 273.15;
-			}else {
-				throw new IllegalAccessError("Tipo de destino erroneo");
-			}			
-			
-		case "f" :
-			
-			if(tipoDestino == "f") {
-				return this.temperatura;
-			}else if(tipoDestino == "k") {
-				return (this.temperatura - 32) * 5/9 + 273.15;
-			}else if(tipoDestino == "c") {
-				return (this.temperatura - 32) * 5/9;
-			}else {
-				throw new IllegalAccessError("Tipo de destino erroneo");
-			}
-								
-
-		default:
-			throw new IllegalAccessError("Error de tipo");
+	public double convertirTemperatura(double temperaturaInicial, String unidadOrigen, String unidadDestino) {
+		if (unidadOrigen.equalsIgnoreCase(unidadDestino)) {
+			return temperaturaInicial; // No se requiere conversión
 		}
 		
+		switch (unidadOrigen.toLowerCase()) {
+			case "c":
+				return convertirDesdeCelsius(temperaturaInicial, unidadDestino);
+			case "f":
+				return convertirDesdeFahrenheit(temperaturaInicial, unidadDestino);
+			case "k":
+				return convertirDesdeKelvin(temperaturaInicial, unidadDestino);
+			default:
+				throw new IllegalArgumentException("Unidad de temperatura no válida: " + unidadOrigen);
+		}
 	}
-
+	
+	private double convertirDesdeCelsius(double temperatura, String unidadDestino) {
+		switch (unidadDestino.toLowerCase()) {
+			case "f":
+				return (temperatura * 9 / 5) + 32;
+			case "k":
+				return temperatura + 273.15;
+			default:
+				throw new IllegalArgumentException("Unidad de temperatura no válida: " + unidadDestino);
+		}
+	}
+	
+	private double convertirDesdeFahrenheit(double temperatura, String unidadDestino) {
+		switch (unidadDestino.toLowerCase()) {
+			case "c":
+				return (temperatura - 32) * 5 / 9;
+			case "k":
+				return (temperatura + 459.67) * 5 / 9;
+			default:
+				throw new IllegalArgumentException("Unidad de temperatura no válida: " + unidadDestino);
+		}
+	}
+	
+	private double convertirDesdeKelvin(double temperatura, String unidadDestino) {
+		switch (unidadDestino.toLowerCase()) {
+			case "c":
+				return temperatura - 273.15;
+			case "f":
+				return (temperatura * 9 / 5) - 459.67;
+			default:
+				throw new IllegalArgumentException("Unidad de temperatura no válida: " + unidadDestino);
+		}
+	}
 }
