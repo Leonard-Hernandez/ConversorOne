@@ -7,7 +7,7 @@ public class ConversorPeso {
 	
 	private Double peso;
     private Double gravedad;
-    
+    //creando hash map
     Map<String, Double> gravedades = new HashMap<>();
        
     public ConversorPeso() {
@@ -32,7 +32,7 @@ public class ConversorPeso {
         	
             return Math.round((this.peso * (gravedad / gravedades.get("tierra"))));
     	}else {
-    		throw new IllegalAccessError("Planta no valido");
+    		throw new IllegalAccessError("Planeta no valido");
     	}
     	
     }	
