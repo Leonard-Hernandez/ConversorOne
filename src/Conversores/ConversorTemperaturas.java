@@ -3,9 +3,12 @@ package Conversores;
 public class ConversorTemperaturas {
 	
 	public double convertirTemperatura(double temperaturaInicial, String unidadOrigen, String unidadDestino) {
+		
+		
 		if (unidadOrigen.equalsIgnoreCase(unidadDestino)) {
 			return temperaturaInicial; // No se requiere conversión
 		}
+		
 		
 		switch (unidadOrigen.toLowerCase()) {
 			case "c":
